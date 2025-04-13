@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dating Website</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.css">
+    <style>
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+            background-color: #fff7e6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+        
+        .page {
+            display: none;
+            max-width: 800px;
+            padding: 30px;
+            background-color: #fff7e6;
+            border-radius: 15px;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        h1, h2, h3 {
+            color: #ff7b7b;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        
+        .title {
+            font-size: 2.5rem;
+            color: #ff7b7b;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .grid-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .image-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid #ffb6b6;
+            margin-bottom: 10px;
+        }
+        
+        .image-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .option-label {
+            color: #ff9999;
+            margin-top: 5px;
+        }
+        
+        button {
+            background-color: #ffcaca;
+            color: #bb5a5a;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #ff9999;
+            color: white;
+        }
+        
+        .nav-button {
+            margin-top: 30px;
+        }
+        
+        .results-container {
+            background-color: #fff0f0;
+            border: 2px dashed #ffb6b6;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .result-item {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(255, 150, 150, 0.2);
+        }
+        
+        .confirmation-card {
+            background-color: #ffd6d6;
+            border: 2px solid #ff9999;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px auto;
+            max-width: 500px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .date-details {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .icon {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Page 1: Initial Valentine Request -->
+    <div id="page1" class="page active">
+        <h1>Will you go on a date with me?? pleaseeee</h1>
+        <div class="buttons">
+            <button onclick="nextStep('page2')">Yes</button>
+            <button id="noButton" onmouseover="moveButton()">I no no wanna o(T_T)o</button>
+        </div>
+        <img src="cat_pleading.jpg" alt="Pleading Cat" style="width: 300px; border-radius: 10px; margin-top: 20px;">
+    </div>
+
+    <!-- Page 2: Thank You Slide -->
+    <div id="page2" class="page">
+        <h2>Okay, don't go yet!</h2>
+        <img src="asdzxc-animels.jpg" alt="Cute Image" style="width: 300px; border-radius: 10px; margin-top: 20px;">
+        <button onclick="nextStep('page3')">Proceed</button>
+    </div>
+
+    <!-- Page 3: Date and Time Picker -->
+    <div id="page3" class="page">
+        <h3>When are you free after holy week?</h3>
+        <input type="text" id="datetimepicker" placeholder="Select Date and Time">
+        <button onclick="nextStep('page4')">Next</button>
+    </div>
+
+    <!-- Page 4: What are we doing at ormoc? -->
+    <div id="page4" class="page">
+        <div class="title">What are we doing at ormoc?</div>
+        <div class="grid-container">
+            <div class="grid-item">
+                <div class="image-circle">
+                    <img src="aquarium.jpg" alt="Aquarium">
+                </div>
+                <input type="checkbox" id="aquarium" name="activity" value="aquarium">
+                <label for="aquarium" class="option-label">aquarium</label>
+            </div>
+            <div class="grid-item">
+                <div class="image-circle">
+                    <img src="arcade.jpg" alt="Arcade">
+                </div>
+                <input type="checkbox" id="arcade" name="activity" value="arcade">
+                <label for="arcade" class="option-label">arcade</label>
+            </div>
+            <div class="grid-item">
+                <div class="image-circle">
+                    <img src="cinema.jpg" alt="Cinema">
+                </div>
+                <input type="checkbox" id="cinema" name="activity" value="cinema">
+                <label for="cinema" class="option-label">cinema</label>
+            </div>
+            <div class="grid-item">
+                <div class="image-circle">
+                    <img src="ceramics.jpg" alt="Ceramics">
+                </div>
+                <input type="checkbox" id="ceramics" name="activity" value="ceramics">
+                <label for="ceramics" class="option-label">ormoc plaza</label>
+            </div>
+            <div class="grid-item">
+                <div class="image-circle">
+                    <img src="exhibition.jpg" alt="Exhibition">
+                </div>
+                <input type="checkbox" id="exhibition" name="activity" value="exhibition">
+                <label for="exhibition" class="option-label">SM</label>
+            </div>
+            <div class="grid-item">
+                <div class="image-circle">
+                    <img src="park.jpg" alt="Park">
+                </div>
+                <input type="checkbox" id="park" name="activity" value="park">
+                <label for="park" class="option-label">Robinsons</label>
+            </div>
+        </div>
+        <button class="nav-button" onclick="nextStep('page5')">Proceed to next one</button>
+    </div>
+
+    <!-- Page 5: Food Slide -->
+    <div id="page5" class="page">
+        <div class="title">What food would you like to eat?</div>
+        <div class="grid-container">
+            <div class="grid-item">
+                <div class="image-circle">
+                    <img src="burger.jpg" alt="Burgers and Fried Chicken">
+                </div>
+                <input type="checkbox" id="burger" name="food" value="burger">
+                <label for="burger" class="option-label">Burgers and Fried Chicken</label>
+            </div>
+            <div class="grid-item">
+                <div class="image-circle">
+                    <img src="hotdog.jpg" alt="Hotdog">
+                </div>
+                <input type="checkbox" id="hotdog" name="food" value="hotdog">
+                <label for="hotdog" class="option-label">Hotdog</label>
+            </div>
+            <div class="grid-item">
+                <div class="image-circle">
+                    <img src="korean_food.jpg" alt="Korean Food">
+                </div>
+                <input type="checkbox" id="korean_food" name="food" value="korean_food">
+                <label for="korean_food" class="option-label">Korean Food</label>
+            </div>
+            <div class="grid-item">
+                <div class="image-circle">
+                    <img src="pasta.jpg" alt="Pasta">
+                </div>
+                <input type="checkbox" id="pasta" name="food" value="pasta">
+                <label for="pasta" class="option-label">Pasta</label>
+            </div>
+            <div class="grid-item">
+                <div class="image-circle">
+                    <img src="pizza.jpg" alt="Pizza">
+                </div>
+                <input type="checkbox" id="pizza" name="food" value="pizza">
+                <label for="pizza" class="option-label">Pizza</label>
+            </div>
+            <div class="grid-item">
+                <div class="image-circle">
+                    <img src="salad.jpg" alt="Salad">
+                </div>
+                <input type="checkbox" id="salad" name="food" value="salad">
+                <label for="salad" class="option-label">Salad</label>
+            </div>
+        </div>
+        <button class="nav-button" onclick="nextStep('page6')">Proceed to next one</button>
+    </div>
+
+    <!-- Page 6: Dessert Slide -->
+    <div id="page6" class="page">
+        <div class="title">Which dessert we eatin bae</div>
+        <div class="grid-container">
+            <div class="grid-item">
+                <div class="image-circle">
+                    <img src="boba.jpg" alt="Boba">
+                </div>
+                <input type="checkbox" id="boba" name="dessert" value="boba">
+                <label for="boba" class="option-label">Boba</label>
+            </div>
+            <div class="grid-item">
+                <div class="image-circle">
+                    <img src="churro.jpg" alt="Churro">
+                </div>
+                <input type="checkbox" id="churro" name="dessert" value="churro">
+                <label for="churro" class="option-label">pan de negro low badjet</label>
+            </div>
+            <div class="grid-item">
+                <div class="image-circle">
+                    <img src="che.jpg" alt="Che">
+                </div>
+                <input type="checkbox" id="che" name="dessert" value="che">
+                <label for="che" class="option-label">fishball</label>
+            </div>
+            <div class="grid-item">
+                <div class="image-circle">
+                    <img src="mochi.jpg" alt="Mochi">
+                </div>
+                <input type="checkbox" id="mochi" name="dessert" value="mochi">
+                <label for="mochi" class="option-label">Mochi</label>
+            </div>
+            <div class="grid-item">
+                <div class="image-circle">
+                    <img src="tandum_bun.jpg" alt="Tandum Bun">
+                </div>
+                <input type="checkbox" id="tandum_bun" name="dessert" value="tandum_bun">
+                <label for="tandum_bun" class="option-label">slice bread</label>
+            </div>
+            <div class="grid-item">
+                <div class="image-circle">
+                    <img src="taiyaki.jpg" alt="Taiyaki">
+                </div>
+                <input type="checkbox" id="taiyaki" name="dessert" value="taiyaki">
+                <label for="taiyaki" class="option-label">Takoyaki</label>
+            </div>
+        </div>
+        <button class="nav-button" onclick="nextStep('page7')">Proceed to next one</button>
+    </div>
+
+    <!-- Page 7: Thank You Slide 2 -->
+    <div id="page7" class="page">
+        <h2>Thank you for your choices!</h2>
+        <img src="kasjdhj.jpg" alt="Cute Image" style="width: 300px; border-radius: 10px; margin-top: 20px;">
+        <button onclick="nextStep('page8')">Proceed</button>
+    </div>
+
+    <!-- Page 8: Results Page -->
+    <div id="page8" class="page">
+        <h1 style="color: #ff6b6b; margin-bottom: 30px;">Please take a screenshot and send it to me after.</h1>
+        
+        <div class="results-container">
+            <h2 style="color: #ff8484;">Your Date Choices</h2>
+            
+            <div class="result-item">
+                <h3 style="color: #ff9e9e;">Activities:</h3>
+                <div id="activityResults"></div>
+            </div>
+            
+            <div class="result-item">
+                <h3 style="color: #ff9e9e;">Food:</h3>
+                <div id="foodResults"></div>
+            </div>
+            
+            <div class="result-item">
+                <h3 style="color: #ff9e9e;">Desserts:</h3>
+                <div id="dessertResults"></div>
+            </div>
+            
+            <div class="result-item">
+                <h3 style="color: #ff9e9e;">Date Details:</h3>
+                <div id="dateTimeResults"></div>
+            </div>
+        </div>
+        
+        <button onclick="resetForm()" style="margin-top: 30px;">Start Over</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.js"></script>
+    <script>
+        // Store user selections
+        let userSelections = {
+            activities: [],
+            food: [],
+            desserts: [],
+            dateTime: ''
+        };
+        
+        // Flatpickr initialization for date and time picker
+        flatpickr("#datetimepicker", {
+            enableTime: true,
+            dateFormat: "m/d/Y h:i K",
+            onClose: function(selectedDates, dateStr, instance) {
+                userSelections.dateTime = dateStr;
+            }
+        });
+        
+        // Show a specific page and hide others
+        function nextStep(pageId) {
+            // Save selections before moving to next page
+            if (pageId === 'page5') {
+                saveActivities();
+            } else if (pageId === 'page6') {
+                saveFood();
+            } else if (pageId === 'page7') {
+                saveDesserts();
+            } else if (pageId === 'page8') {
+                displayResults();
+            }
+            
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show the selected page
+            document.getElementById(pageId).classList.add('active');
+        }
+        
+        // Save selected activities
+        function saveActivities() {
+            userSelections.activities = [];
+            document.querySelectorAll('input[name="activity"]:checked').forEach(checkbox => {
+                userSelections.activities.push(checkbox.value);
+            });
+        }
+
+        // Save selected food
+        function saveFood() {
+            userSelections.food = [];
+            document.querySelectorAll('input[name="food"]:checked').forEach(checkbox => {
+                userSelections.food.push(checkbox.value);
+            });
+        }
+        
+        // Save selected desserts
+        function saveDesserts() {
+            userSelections.desserts = [];
+            document.querySelectorAll('input[name="dessert"]:checked').forEach(checkbox => {
+                userSelections.desserts.push(checkbox.value);
+            });
+        }
+        
+        // Display results on the results page
+        function displayResults() {
+            const activityResults = document.getElementById('activityResults');
+            const foodResults = document.getElementById('foodResults');
+            const dessertResults = document.getElementById('dessertResults');
+            const dateTimeResults = document.getElementById('dateTimeResults');
+            
+            // Display activities
+            if (userSelections.activities.length > 0) {
+                activityResults.innerHTML = userSelections.activities.map(activity => 
+                    `<p>✅ ${activity}</p>`
+                ).join('');
+            } else {
+                activityResults.innerHTML = '<p>No activities selected</p>';
+            }
+
+            // Display food
+            if (userSelections.food.length > 0) {
+                foodResults.innerHTML = userSelections.food.map(food => 
+                    `<p>✅ ${food}</p>`
+                ).join('');
+            } else {
+                foodResults.innerHTML = '<p>No food selected</p>';
+            }
+            
+            // Display desserts
+            if (userSelections.desserts.length > 0) {
+                dessertResults.innerHTML = userSelections.desserts.map(dessert => 
+                    `<p>✅ ${dessert}</p>`
+                ).join('');
+            } else {
+                dessertResults.innerHTML = '<p>No desserts selected</p>';
+            }
+
+            // Display date and time
+            dateTimeResults.innerHTML = `<p>📅 Date and Time: ${userSelections.dateTime || 'Not selected'}</p>`;
+        }
+        
+        // Move the "No" button when hovered
+        function moveButton() {
+            const button = document.getElementById('noButton');
+            const maxX = window.innerWidth - button.offsetWidth;
+            const maxY = window.innerHeight - button.offsetHeight;
+            
+            const newX = Math.floor(Math.random() * maxX);
+            const newY = Math.floor(Math.random() * maxY);
+            
+            button.style.position = 'absolute';
+            button.style.left = newX + 'px';
+            button.style.top = newY + 'px';
+        }
+        
+        // Reset the form to start over
+        function resetForm() {
+            userSelections = {
+                activities: [],
+                food: [],
+                desserts: [],
+                dateTime: ''
+            };
+            
+            // Uncheck all checkboxes
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            
+            // Go back to first page
+            nextStep('page1');
+        }
+    </script>
+</body>
+</html>
